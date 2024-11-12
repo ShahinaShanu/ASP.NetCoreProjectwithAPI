@@ -1,0 +1,46 @@
+﻿@{
+    //ViewBag.Title = "Employee Registration";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h1>You logged in successfully</h1>
+<button type="button" onclick="details()">Details</button>
+@section Scripts{
+<script>
+    $(document).ready(function () {
+        var token = '@ViewBag.Token';
+
+        if (token) {
+            // Store the token in localStorage
+            localStorage.setItem("authToken", token);
+            console.log("Token stored in localStorage");
+        }
+    });
+    // Get the token from the server (via ViewBag)
+    function details() 
+    { 
+        alert('e');
+        var token = localStorage.getItem("authToken");
+        console.log("token",token);
+        if (token)
+            {
+            console.log("inner token");
+            $.ajax({
+                url: '@Url.Action("Details", "Employee")',
+                type: "Post",
+                headers: {
+                    "Authorization": "Bearer " + token // Send token in Authorization header
+                },
+                success: function (response) {
+                    console.log("Success:", response);
+                    // Handle the response (e.g., render employee details)
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error:", error);
+                }
+            });
+        }
+        
+    }
+    
+</script>
+}
