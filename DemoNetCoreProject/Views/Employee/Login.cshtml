@@ -18,12 +18,12 @@
     // Get the token from the server (via ViewBag)
     function details() 
     { 
-        alert('e');
+        //alert('e');
         var token = localStorage.getItem("authToken");
         console.log("token",token);
         if (token)
             {
-            console.log("inner token");
+            //console.log("inner token");
             $.ajax({
                 url: '@Url.Action("Details", "Employee")',
                 type: "Post",
@@ -31,7 +31,7 @@
                     "Authorization": "Bearer " + token // Send token in Authorization header
                 },
                 success: function (response) {
-                    console.log("Success:", response);
+                    //console.log("Success:", response);
                     // Handle the response (e.g., render employee details)
                 },
                 error: function (xhr, status, error) {
