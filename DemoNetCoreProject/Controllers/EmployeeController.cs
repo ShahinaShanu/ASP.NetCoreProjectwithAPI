@@ -47,7 +47,7 @@ namespace DemoNetCoreProject.Controllers
             return Unauthorized();
         }
 
-        [HttpPost]// GET: EmployeeController/Details/5
+        [HttpPost]
         public async Task<IActionResult> GetDetails()
         {
             var token = Request.Headers["Authorization"].ToString();
@@ -55,7 +55,7 @@ namespace DemoNetCoreProject.Controllers
             {
                 token = token.Replace("{\"token\":\"", "").Replace("\"}", "");
             }
-            //var tokenNew= token.Replace("Bearer", "").Trim();
+          
             if (string.IsNullOrEmpty(token))
             {
                 return RedirectToAction("Login");  // Redirect to login if no token
@@ -72,7 +72,6 @@ namespace DemoNetCoreProject.Controllers
                 var content = await response.Content.ReadAsStringAsync();
                 var employee = JsonConvert.DeserializeObject<EmployeeDto>(content);
                 TempData["Employee"] = JsonConvert.SerializeObject(employee);
-                // Return the employee data to the view
                 return Json(new { redirectUrl = Url.Action("Details", "Employee") });
                 //return Json(new { redirectUrl = Url.Action("Details", "Employee", new { id = employee.Id }) });
             }
