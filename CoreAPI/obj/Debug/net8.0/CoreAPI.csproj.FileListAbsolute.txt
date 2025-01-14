@@ -39,3 +39,4 @@ C:\Users\User\Desktop\DemoNetCoreProject\CoreAPI\obj\Debug\net8.0\refint\CoreAPI
 C:\Users\User\Desktop\DemoNetCoreProject\CoreAPI\obj\Debug\net8.0\CoreAPI.pdb
 C:\Users\User\Desktop\DemoNetCoreProject\CoreAPI\obj\Debug\net8.0\CoreAPI.genruntimeconfig.cache
 C:\Users\User\Desktop\DemoNetCoreProject\CoreAPI\obj\Debug\net8.0\ref\CoreAPI.dll
+C:\Users\User\Desktop\DemoNetCoreProject\CoreAPI\obj\Debug\net8.0\CoreAPI.sourcelink.json

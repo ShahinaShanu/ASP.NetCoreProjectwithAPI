@@ -1,6 +1,17 @@
-﻿@model DemoNetCoreProject.Models.LoginModel
-@{
-    //ViewBag.Title = "Employee Registration";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+﻿@model DemoNetCoreProject.Models.EmployeeDto
+
+
+
+@* <h1>@ViewBag.Employee</h1> *@
+<h1>Hello, Welcome @Model.Name</h1>
+
+@if (@Model!= null)
+{
+    @* var employee = (DemoNetCoreProject.Models.EmployeeDto)ViewBag.Employee; *@
+    <p><strong>Name:</strong> @Model.Name</p>
+    <p><strong>Email:</strong> @Model.Email</p>
 }
-<h1>@ViewBag.Employee</h1>
+else
+{
+    <p>No employee data available.</p>
+}

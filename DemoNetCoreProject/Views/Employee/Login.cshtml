@@ -7,7 +7,7 @@
 @section Scripts{
 <script>
     $(document).ready(function () {
-        var token = '@ViewBag.Token';
+            var token = '@Html.Raw(ViewBag.Token)';
 
         if (token) {
             // Store the token in localStorage
@@ -25,14 +25,17 @@
             {
             //console.log("inner token");
             $.ajax({
-                url: '@Url.Action("Details", "Employee")',
+                    url: '@Url.Action("GetDetails", "Employee")',
                 type: "Post",
                 headers: {
-                    "Authorization": "Bearer " + token // Send token in Authorization header
+                        "Authorization": token
+                    //"Authorization": "Bearer " + token // Send token in Authorization header
                 },
                 success: function (response) {
                     //console.log("Success:", response);
-                    // Handle the response (e.g., render employee details)
+                    if (response.redirectUrl) {
+                        window.location.href = response.redirectUrl;
+                    }
                 },
                 error: function (xhr, status, error) {
                     console.error("Error:", error);

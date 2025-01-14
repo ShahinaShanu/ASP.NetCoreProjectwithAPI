@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using CoreAPI.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -49,9 +50,15 @@ namespace CoreAPI.Controllers
         // GET: api/<EmployeeAPIController>
         [Authorize]
         [HttpGet("getEmployee")]
-        public IEnumerable<string> Get()
+        public IActionResult Get()
         {
-            return new string[] { "shahina", "bano" };
+            var employeedto = new EmployeeDto
+            { 
+             Id=1,
+             Name="shahina",
+             Email="sheikhshahina@gmail.com",
+            };
+            return Ok(employeedto);
         }
 
         // GET api/<EmployeeAPIController>/5

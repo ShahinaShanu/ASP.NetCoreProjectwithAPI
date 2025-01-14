@@ -48,9 +48,14 @@ namespace DemoNetCoreProject.Controllers
         }
 
         [HttpPost]// GET: EmployeeController/Details/5
-        public async Task<ActionResult> Details()
+        public async Task<IActionResult> GetDetails()
         {
-            var token = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+            var token = Request.Headers["Authorization"].ToString();
+            if (!string.IsNullOrEmpty(token) && token.Contains("{\"token\":\""))
+            {
+                token = token.Replace("{\"token\":\"", "").Replace("\"}", "");
+            }
+            //var tokenNew= token.Replace("Bearer", "").Trim();
             if (string.IsNullOrEmpty(token))
             {
                 return RedirectToAction("Login");  // Redirect to login if no token
@@ -65,19 +70,25 @@ namespace DemoNetCoreProject.Controllers
             {
                 // Read and deserialize the response content to the model
                 var content = await response.Content.ReadAsStringAsync();
-                var employee = JsonConvert.DeserializeObject<LoginModel>(content);
-                ViewBag.Employee = employee;
+                var employee = JsonConvert.DeserializeObject<EmployeeDto>(content);
+                TempData["Employee"] = JsonConvert.SerializeObject(employee);
                 // Return the employee data to the view
-                return View();
+                return Json(new { redirectUrl = Url.Action("Details", "Employee") });
+                //return Json(new { redirectUrl = Url.Action("Details", "Employee", new { id = employee.Id }) });
             }
-            return View();
+            return StatusCode((int)response.StatusCode, new { message = "Failed to fetch employee details." });
         }
 
 
         // GET: EmployeeController/Create
-        public ActionResult Create()
+        public ActionResult Details()
         {
-            return View();
+            var employee= TempData["Employee"];
+            if (employee != null)
+            {
+                employee = JsonConvert.DeserializeObject<EmployeeDto>(TempData["Employee"].ToString());
+            }
+            return View(employee);
         }
 
         // POST: EmployeeController/Create
